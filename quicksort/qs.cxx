@@ -31,7 +31,7 @@ void qs(It first, It last) {
 
     *i = piovt;
     
-    qs(first, std::next(i, -1));
+    qs(first, i);
     qs(std::next(i, 1),  last);
 }
 #define N 1e8
