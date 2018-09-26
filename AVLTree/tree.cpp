@@ -8,7 +8,7 @@
 #include <functional>
 #include <iostream>
 #define DEBUG
-#include "../../comm.h"
+//#include "../../comm.h"
 using namespace std;
 
 class viewer;
@@ -34,7 +34,7 @@ struct node
             delete left;
         if(right)
             delete right;
-        LOGI(~node r=%d, key);
+        //LOGI(~node r=%d, key);
     }
 
     void release()
@@ -131,14 +131,14 @@ inline node *node::rotateright(node *p)
  *   a    4                 3   c
  *       / \               / \
  *      b   c              a  b                 */
-inline node *node::rotateleft(node *p)
+inline node *node::rotateleft(node *q)
 {
-    node *q = p->right;
-    p->right = q->left;
-    q->left = p;
-    fixheight(p);
+    node *p = q->right;
+    q->right = p->left;
+    p->left = q;
     fixheight(q);
-    return q;
+    fixheight(p);
+    return p;
 }
 
 // balance(1) the root node
@@ -186,7 +186,7 @@ node *node::balance(node *p)
         if(balance_factor(p->right) < 0)
         {
             p->right = rotateright(p->right);
-            LOG(INFO, r-l<0 k=%d, p->right->key);
+            //LOG(INFO, r-l<0 k=%d, p->right->key);
         }
 
         //   15(4)(p)         ->        15(3)(p)
@@ -229,7 +229,7 @@ node *node::balance(node *p)
     //   p->right->height - p->left->height
     if(balance_factor(p) == -2)
     {
-        LOG(INFO, r-l=-2 k=%d,p->key);
+        //LOG(INFO, r-l=-2 k=%d,p->key);
 
         //     15(4)(p)     ->     15(4)(p)
         //     /     \             /       \
@@ -265,7 +265,7 @@ node *node::balance(node *p)
         if(balance_factor(p->left) > 0)
         {
             p->left = rotateleft(p->left);
-            LOGI(r-l>0 k=%d, p->left->key);
+            //LOGI(r-l>0 k=%d, p->left->key);
         }
 
         // omit...
@@ -441,7 +441,7 @@ int main()
     {
         cout << "insert\n";
         int k = rand()%100+1;
-        LOG(INFO, i=%d k=%d, i, k);
+        //LOG(INFO, i=%d k=%d, i, k);
         root = root->insert(root,k);
         v << root << endl;
         if(rand()%3 == 0)
